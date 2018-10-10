@@ -25,7 +25,6 @@ def input_data():
                 break
         except LookupError:
             print("There is no such artist in iTunes database. Try someone else.")
-            continue
 
     while True:
         answer = input("Would you like to know genres of your artists?(yes/no) ")
@@ -45,8 +44,6 @@ def input_data():
             break
         else:
             print("Invalid answer!")
-            continue
-
 
     while True:
         genre = input("Enter genre or Enter to finish: ")
@@ -78,7 +75,7 @@ def time_estimate():
     :return: time of journey in milliseconds.
     """
     while True:
-        mode = input("What you exactly know about journey?(time/distance)")
+        mode = input("What you exactly know about journey?(time/distance/destination)")
 
         if mode.lower() == "time":
             while True:
@@ -117,10 +114,15 @@ def time_estimate():
                     break
 
             return int(distance / speed * 3600000)
-
+        elif mode.lower() == "destination":
+            variants = {"Lviv":45,"Kyiv":60}
+            dest = input("Enter your destination")
+            
+            songs_length = getattr(variants, dest, 50)
+            
+            return songs_length
         else:
             print("Incorrect input! Try one more time!")
-            continue
 
 
 def get_songs(artists_list, genres_list):
