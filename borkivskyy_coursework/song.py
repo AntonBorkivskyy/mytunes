@@ -24,4 +24,4 @@ class Song:
         return str_scd
 
     def info(self):
-        print(self.name + " | " + self.artist + " | " + self.time_to_min())
+        print(f"{self.name} | {self.artist} | {self.time_to_min()}")
