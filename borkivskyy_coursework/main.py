@@ -162,14 +162,14 @@ def build_playlist(songs, length, time):
     """
     result_songs = DynamicArray()
 
-    ch = time <= length
+    if time > length:
+        return songs
 
     while time > 0:
         song = random.choice(songs)
         time -= song.length
         result_songs.append(song)
-        if ch:
-            songs.remove(song)
+        songs.remove(song)
 
     return result_songs
 
