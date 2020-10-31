@@ -18,7 +18,7 @@ def input_data():
     while True:
         artist_inp = input("Enter artist's name or Enter to finish: ")
         try:
-            if len(artist_inp) > 0 or len(artists_list) == 0:
+            if len(artist_inp) or not len(artists_list):
                 artist = itunespy.search_artist(artist_inp)
                 artists_list.append(artist)
             else:
@@ -28,10 +28,10 @@ def input_data():
             continue
 
     while True:
-        answer = input("Would you like to know genres of your artists?(yes/no) ")
-        if answer.lower() == "no":
+        answer = input("Would you like to know genres of your artists?(yes/no) ").lower()
+        if answer == "no":
             break
-        elif answer.lower() == "yes":
+        elif answer == "yes":
             genres_set = set()
             for i in artists_list:
                 for a in i[0].get_albums():
@@ -45,14 +45,10 @@ def input_data():
             break
         else:
             print("Invalid answer!")
-            continue
-
 
     while True:
         genre = input("Enter genre or Enter to finish: ")
-        if len(genre) > 0 or len(genres_list) == 0:
-            if len(genre) == 0:
-                continue
+        if len(genre) or not len(genres_list):
             ch = False
             for art in artists_list:
                 albums = art[0].get_albums()
@@ -63,7 +59,7 @@ def input_data():
                 print("Your artist does not work in this genre. Try another one.")
                 continue
             genres_list.append(genre)
-        elif len(genre) == 0:
+        elif not len(genre):
             break
 
     return artists_list, genres_list
@@ -78,9 +74,9 @@ def time_estimate():
     :return: time of journey in milliseconds.
     """
     while True:
-        mode = input("What you exactly know about journey?(time/distance)")
+        mode = input("What you exactly know about journey?(time/distance)").lower()
 
-        if mode.lower() == "time":
+        if mode == "time":
             while True:
                 time = input("Enter the time in format: 'hh:mm' ")
                 ch = False
@@ -95,10 +91,10 @@ def time_estimate():
                 if ch:
                     continue
 
-                return (((int(time[0:2]) * 60) + int(time[3:5])) * 60000)
+                return ((int(time[0:2]) * 60) + int(time[3:5])) * 60000
 
-        elif mode.lower() == "distance":
-            speeds = {"hiking" : 5, "car" : 60, "train" : 100, "plane" : 150}
+        elif mode == "distance":
+            speeds = {"hiking": 5, "car": 60, "train": 100, "plane": 150}
             while True:
                 try:
                     distance = float(input("Enter the distance(km): "))
@@ -112,9 +108,9 @@ def time_estimate():
                 if transport not in speeds:
                     print("Invalid transport! Try one more time!")
                     continue
-                else:
-                    speed = speeds[transport]
-                    break
+
+                speed = speeds[transport]
+                break
 
             return int(distance / speed * 3600000)
 
